@@ -10,11 +10,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
-          node-version: 20
+          node-version: 26
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -59,7 +59,7 @@ jobs:
           EOF
 
       - name: Upload IPK
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ipk
           path: dist/*.ipk
@@ -72,15 +72,15 @@ jobs:
       contents: write
     steps:
       # --generate-notes shells out to git, so this needs the full history.
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
-          node-version: 20
+          node-version: 26
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: ipk
           path: dist

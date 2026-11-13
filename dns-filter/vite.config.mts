@@ -6,6 +6,13 @@ import ts from 'typescript';
 // that far. TypeScript can, so it rewrites the finished bundle once
 // minification is done. Node 0.12 has Symbol.iterator, so downlevelIteration
 // keeps for-of over Map and Set correct.
+//
+// TypeScript 6 deprecates the ES5 target and downlevelIteration, and
+// TypeScript 7 (the native `tsc` used for type checking) removes them and has
+// no JS API, so `typescript` here resolves to the TypeScript 6 API package
+// and the deprecation errors are silenced. TypeScript 6 also turns
+// alwaysStrict on by default, which adds "use strict" to the bundle;
+// alwaysStrict: false keeps the output TypeScript 5 produced.
 function lowerToEs5(): Plugin {
   return {
     name: 'lower-to-es5',
@@ -19,6 +26,8 @@ function lowerToEs5(): Plugin {
             target: ts.ScriptTarget.ES5,
             module: ts.ModuleKind.CommonJS,
             downlevelIteration: true,
+            alwaysStrict: false,
+            ignoreDeprecations: '6.0',
           },
           reportDiagnostics: true,
         });
